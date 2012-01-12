@@ -1,0 +1,115 @@
+<html>
+<head>
+<style type = 'text/css'>
+	#canvas_container {
+		height:500px;
+		width:500px;
+		border:1px solid #aaa;
+	}
+</style>
+<script type = 'text/javascript' src = 'raphaeljs/raphaelv2.0.1.js'></script>
+<script type = 'text/javascript'>
+	function ele(id) {
+		return document.getElementById(id);
+	}
+	
+	window.onload = function() {
+		var paper = new Raphael(ele('canvas_container'), 500, 500);
+		
+		/*var circle = paper.circle(100,100,100);
+		for (i = 0; i < 5; i++) {
+			var multiplier = i * 5;
+			paper.circle(250 + (2 * multiplier), 100 + multiplier, 50 - multiplier);
+			var rect = paper.rect(200,200,250,100);
+			var ellipse = paper.ellipse(200,400,100,50);
+		}
+		*/
+		
+		/*var tetronimo = paper.path('M 250 250 l 0 -50 l -50 0 l 0 -50 l -50 0 l 0 50 l -50 0 l 0 50 z')
+		tetronimo.attr({
+			gradient: '90-#526c7a-#64a0c1',
+			stroke: '#3b4449',
+			'stroke-width':10,
+			'stroke-linejoin':'round',
+			transform:'r90',
+			title:'This is a tetris block'
+		});
+		
+		tetronimo.animate({
+			transform:'r360'
+		}, 2000, 'bounce',//Callback
+			function() {
+				this.animate({
+					path: 'M 250 250 l 0 -50 l -50 0 l 0 -50 l -100 0 l 0 50 l 50 0 l 0 50 z',
+					transform: 'r90',
+					stroke: '#ddd456',
+					'stroke-width':15
+				},10000, 'elastic');
+			}
+		);*/
+		
+		/*var circ = paper.circle(250,250,40);
+		circ.attr({
+			fill:'#000',
+			stroke:'none'
+		});
+		
+		var text = paper.text(250,250,'Bye Bye Circle!');
+		text.attr({
+			opacity:0,
+			'font-size':12
+		}).toBack();
+		
+		circ.node.onmouseover = function() {
+			this.style.cursor = 'pointer';
+		}
+		
+		circ.node.onclick = function() {
+			text.animate({opacity:1},2000);
+			circ.animate({opacity:0},2000,
+				function() {
+					this.remove();
+				});
+		}
+		*/
+		
+		var circ = paper.circle(250,250,20).attr({fill:'000'});
+		var moodText = paper.text(250,250,'My\nMood').attr({fill:'#fff'});
+		
+		moods = ['Bad','Not Good','OK','Smiley','Krazy'];
+		colors = ['#cc0000','#a97e22','#9f9136','#7c9a2d','#3a9a2d'];
+		
+		var myMood = 5;
+		
+		function showMood() {
+			for (i = 0; i < myMood; i++) {
+				(function(i) {
+					console.log('enter loop ' + i); 
+					setTimeout(function() {
+						console.log('enter timeout ' + i);
+						inc = i * 40;
+						Ytr = -200 + inc;
+						paper.circle(250,250,20).attr({
+							stroke: 'none',
+							fill:colors[myMood - 1]
+						})
+						.animate({
+								transform:'t0,' + Ytr
+						},2000,'bounce').toBack();
+					},50*i);
+				})(i);
+			}
+			
+			paper.text(250,300,moods[myMood - 1]).attr({
+				fill:colors[myMood - 1]
+			});
+		}
+		moodText.node.onclick = showMood;
+		circ.node.onclick = showMood;
+	}
+</script>
+</head>
+<body>
+	<div id = 'canvas_container'></div>
+</body>
+</html>
